@@ -1,0 +1,71 @@
+{
+  "_": "Example film: a public to-do demo app. Times are film seconds. The capture runs `app` off camera, performs `actions` and measures `targets` on the live app; the Remotion film reads the same file for cards, callouts, camera, spotlight and cursor.",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration": 32,
+  "app": {
+    "_": "No sign-in. Each capture starts in a fresh browser, so the list starts empty.",
+    "base": "https://demo.playwright.dev",
+    "start": "/todomvc/",
+    "permission": "Public demo site that the Playwright project publishes for browser testing.",
+    "login": { "type": "none" },
+    "setup": [
+      { "do": "goto", "path": "/todomvc/" },
+      { "do": "waitFor", "sel": ".new-todo" },
+      { "do": "mouse", "to": [1500, 900] }
+    ]
+  },
+  "recStart": 6.0,
+  "recEnd": 28.6,
+  "screenIn": 6.0,
+  "screenOut": 27.2,
+  "endCard": 27.6,
+  "cards": [
+    { "from": 0.0, "to": 3.0, "lines": ["Your week.", "One list."] },
+    { "from": 3.0, "to": 6.2, "lines": ["Add it. Tick it off.", "Nothing slips."], "accent": 1 }
+  ],
+  "callouts": [
+    { "from": 7.6, "to": 10.4, "title": "Type a task." },
+    { "from": 11.2, "to": 14.6, "title": "Press Enter. It is on the list." },
+    { "from": 17.8, "to": 20.4, "title": "Done. Crossed off." },
+    { "from": 22.4, "to": 25.4, "title": "What is left.", "sub": "Two tasks open." }
+  ],
+  "end": { "line": "Made with demo-film.", "url": "demo.playwright.dev/todomvc" },
+  "targets": {
+    "input":   { "sel": ".new-todo", "at": 6.8 },
+    "list":    { "sel": [".new-todo", ".todo-list", ".footer"], "at": 15.0 },
+    "toggle1": { "sel": ".todo-list li:nth-child(1) .toggle", "at": 15.0 },
+    "item1":   { "sel": ".todo-list li:nth-child(1)", "at": 15.0 },
+    "active":  { "sel": ".filters a[href=\"#/active\"]", "at": 15.0 },
+    "open":    { "sel": [".todo-list", ".todo-count"], "at": 22.3 }
+  },
+  "actions": [
+    { "t": 7.0,  "type": "mouseTo", "target": "input", "px": 160, "dur": 1.4 },
+    { "t": 8.6,  "type": "click", "target": "input" },
+    { "t": 8.9,  "type": "type", "sel": ".new-todo", "text": "Send the quote to Anna", "dur": 1.6 },
+    { "t": 10.7, "type": "press", "key": "Enter" },
+    { "t": 11.1, "type": "type", "sel": ".new-todo", "text": "Book the site visit", "dur": 1.4 },
+    { "t": 12.7, "type": "press", "key": "Enter" },
+    { "t": 13.1, "type": "type", "sel": ".new-todo", "text": "Order the new tiles", "dur": 1.4 },
+    { "t": 14.7, "type": "press", "key": "Enter" },
+    { "t": 14.8, "type": "waitFor", "sel": ".todo-list li:nth-child(3)" },
+    { "t": 16.0, "type": "mouseTo", "target": "toggle1", "dur": 1.2 },
+    { "t": 17.4, "type": "click", "target": "toggle1" },
+    { "t": 20.4, "type": "mouseTo", "target": "active", "dur": 1.2 },
+    { "t": 21.8, "type": "click", "target": "active" },
+    { "t": 22.0, "type": "waitFor", "sel": ".filters a.selected[href=\"#/active\"]" },
+    { "t": 22.4, "type": "mouseTo", "to": [1500, 900], "dur": 1.2 }
+  ],
+  "cursorOn": [7.0, 25.6],
+  "clicks": [8.6, 17.4, 21.8],
+  "camera": [
+    { "start": 6.9,  "end": 8.4,  "zoom": 1.6,  "target": "input" },
+    { "start": 15.1, "end": 16.4, "zoom": 1.55, "target": "list" },
+    { "start": 25.4, "end": 26.8, "zoom": 1.0,  "target": [960, 540] }
+  ],
+  "spots": [
+    { "from": 17.8, "to": 20.4, "targets": ["item1"] },
+    { "from": 22.4, "to": 25.4, "targets": ["open"] }
+  ]
+}

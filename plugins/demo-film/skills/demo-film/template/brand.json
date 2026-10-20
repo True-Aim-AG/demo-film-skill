@@ -1,0 +1,16 @@
+{
+  "_": "The film's look. mode \"none\": a neutral look, no logo. mode \"custom\": your logo, colours and font. Files are under public/. See the skill's references/brand.md.",
+  "mode": "none",
+  "name": "",
+  "logo": "",
+  "colors": {
+    "ground": "#FAFAFA",
+    "ink": "#1F2328",
+    "inkSoft": "#4B5058",
+    "accent": "#2F6FEB"
+  },
+  "font": {
+    "file": "",
+    "family": ""
+  }
+}

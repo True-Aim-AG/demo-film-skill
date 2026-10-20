@@ -1,0 +1,39 @@
+{
+  "name": "demo-films",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo films of a web app: record the real app with Playwright, direct in Remotion. One timeline per film in timelines/.",
+  "scripts": {
+    "login": "node capture/login.cjs",
+    "brand": "node capture/brand.cjs",
+    "inspect": "node capture/inspect.cjs",
+    "capture": "node capture/record.cjs",
+    "studio": "remotion studio",
+    "render": "node scripts/film.cjs render",
+    "draft": "node scripts/film.cjs draft",
+    "still": "node scripts/film.cjs still",
+    "sheet": "node scripts/film.cjs sheet",
+    "pace": "node scripts/pace.cjs",
+    "shift": "node scripts/shift.cjs",
+    "check-films": "node scripts/film.cjs check",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/fonts": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "playwright-core": "1.63.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
