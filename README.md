@@ -126,6 +126,7 @@ render about 1 to 3 minutes.
 |---|---|
 | `ffmpeg` or `pnpm` is not found | Close the terminal, open a new one, and try again. |
 | "Chrome is not found" | Install Google Chrome (step 1). |
+| On Windows, the render stops with `remotion.exe ENOENT` | The folder path is too long for Windows. Put the film folder higher up, for example `C:\demo-films\example`. |
 | The sign-in page says the browser is not secure | Your company's sign-in blocks automated browsers. Ask your IT team for a test account with a plain password. |
 | "the saved sign-in has expired" | Ask Claude to sign in again. |
 | The film shows the wrong part of the page | Tell Claude what you see and at which second. |
