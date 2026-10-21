@@ -4,7 +4,21 @@ Run each command in the film project folder. `<id>` is the film id, the name of 
 `timelines/` without `.json`. Claude runs these commands for you. You can also run them
 yourself.
 
-## Set up
+## Prepare the computer
+
+Ask Claude "Set up demo films". Claude runs the setup script of the `setup` skill:
+
+| Command | What it does |
+|---|---|
+| `powershell.exe -NoProfile -ExecutionPolicy Bypass -File setup-windows.ps1` | Windows: checks Node.js 20+, pnpm, ffmpeg and Chrome. Changes nothing. |
+| `... setup-windows.ps1 -Install` | Windows: installs what is missing with winget, then pnpm with npm. |
+| `bash setup-macos.sh` | macOS: checks Homebrew, Node.js 20+, pnpm, ffmpeg and Chrome. Changes nothing. |
+| `bash setup-macos.sh --install` | macOS: installs what is missing with Homebrew, then pnpm with npm. |
+| `-DryRun` / `--dry-run` | Added to an install: prints the commands and installs nothing. |
+
+The scripts are in `plugins/demo-film/skills/setup/scripts/`. They are safe to run again.
+
+## Set up a film project
 
 | Command | What it does |
 |---|---|

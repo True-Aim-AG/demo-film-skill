@@ -49,7 +49,7 @@ All times are seconds on the film's clock. See [Timeline](timeline.md) for every
 
 ## The workflow that Claude follows
 
-1. Check the tools.
+1. Check the tools, and install what is missing.
 2. Ask: brand or no brand.
 3. Ask for permission and a test account.
 4. Write a short brief with you.

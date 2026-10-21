@@ -16,9 +16,11 @@ numbers. Show the result as a video file and ask what they think.
 
 ## Step 0. Check the tools
 
-Run `node -v` (20 or later), `pnpm -v`, `ffmpeg -version`, and check that Google Chrome is
-installed. If one is missing, tell the user which, and offer the install command from the README
-(winget on Windows, brew on macOS). Install only after the user agrees.
+Run the check of the `setup` skill (`demo-film:setup`, in `../setup/` next to this skill's
+folder): `scripts/setup-windows.ps1` or `scripts/setup-macos.sh` with no flag. It tells you if
+Node.js 20+, pnpm, ffmpeg and Chrome are there. If the last line is not `READY`, load the `setup` skill and
+follow it: it installs what is missing. Never ask the user to install a tool by hand. Then
+continue here.
 
 ## Step 1. Ask: brand or no brand
 

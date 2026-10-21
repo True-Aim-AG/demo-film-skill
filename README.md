@@ -2,7 +2,8 @@
 
 A skill for Claude Code that makes a short, silent demo film of a web app. Claude records the
 real app in Chrome, then adds a camera, a spotlight, a large cursor, short captions and an end
-card. You tell Claude what to show. Claude does the technical work.
+card. You tell Claude what to show. Claude does the technical work, and it also installs the
+tools it needs.
 
 The result is an MP4 file, 1920x1080, 20 to 70 seconds.
 
@@ -11,62 +12,62 @@ your first film on Windows or macOS.
 
 ## Before you start
 
-You need all of these:
+You bring these four things:
 
-- [ ] **Claude Code**, with a paid Claude plan (Pro, Max, Team or Enterprise) or a Claude
-      Console account with API credit.
-- [ ] **Node.js 20 or later.**
-- [ ] **pnpm.**
-- [ ] **ffmpeg.**
-- [ ] **Google Chrome.**
-- [ ] **Terminal basics.** You can open a terminal, paste a command and press Enter.
+- [ ] **A paid Claude plan** (Pro, Max, Team or Enterprise), or a Claude Console account with
+      API credit. Claude Code needs it.
 - [ ] **A test account on your app, with fake data only.** Real customer data must not appear
       in a film.
 - [ ] **Permission to film the app.** You own the app, or its owner agreed.
 - [ ] **A Remotion Company Licence**, if your company is for-profit and has 4 or more employees.
       See [Licences](#licences).
 
-## 1. Install the tools
+Claude installs the rest for you: Node.js 20 or later, pnpm, ffmpeg and Google Chrome (and
+Homebrew on macOS). You only need to open a terminal and paste one block.
 
-Do these steps one time. Open a terminal: **PowerShell** on Windows, **Terminal** on macOS. On
-macOS, install Homebrew first if you do not have it (https://brew.sh).
+## 1. Install
 
-| Tool | Windows (PowerShell) | macOS (Terminal) |
-|---|---|---|
-| Claude Code | `irm https://claude.ai/install.ps1 \| iex` | `curl -fsSL https://claude.ai/install.sh \| bash` |
-| Node.js 20 or later | `winget install OpenJS.NodeJS.LTS` | `brew install node` |
-| ffmpeg | `winget install Gyan.FFmpeg` | `brew install ffmpeg` |
-| Google Chrome | `winget install Google.Chrome` | `brew install --cask google-chrome` |
+Open a terminal: **PowerShell** on Windows (Windows key, type `PowerShell`, Enter), **Terminal**
+on macOS (Cmd+Space, type `Terminal`, Enter). Paste the block for your system and press Enter.
 
-1. Run the commands in the table, top to bottom.
-2. Close the terminal and open a new one, so that it finds the new tools.
-3. Run `npm install -g pnpm`.
-4. Run `claude` one time and sign in with your Claude account.
-
-To check the tools, run `node -v`, `pnpm -v` and `ffmpeg -version`. Each command must show a
-version number. Node must show v20 or later.
-
-## 2. Install the skill
-
-**Option A: plugin (recommended).** Start Claude Code with `claude`. Type these two commands:
+Windows (PowerShell):
 
 ```
-/plugin marketplace add True-Aim-AG/demo-film-skill
-/plugin install demo-film@demo-film-skill
+irm https://claude.ai/install.ps1 | iex
+$env:Path += ";$env:USERPROFILE\.local\bin"
+claude plugin marketplace add True-Aim-AG/demo-film-skill
+claude plugin install demo-film@demo-film-skill
+claude "Set up demo films"
 ```
 
-Then close Claude Code and start it again.
+macOS (Terminal):
 
-**Option B: manual copy.**
+```
+curl -fsSL https://claude.ai/install.sh | bash
+export PATH="$HOME/.local/bin:$PATH"
+claude plugin marketplace add True-Aim-AG/demo-film-skill
+claude plugin install demo-film@demo-film-skill
+claude "Set up demo films"
+```
 
-1. Download this repository as a ZIP file (the green **Code** button, then **Download ZIP**).
-   Unzip it.
-2. Copy the folder `plugins/demo-film/skills/demo-film` to your skills folder:
-   - Windows: `C:\Users\<you>\.claude\skills\demo-film`
-   - macOS: `~/.claude/skills/demo-film`
-3. Start Claude Code again.
+The block installs Claude Code and the skill, then starts Claude with "Set up demo films".
 
-## 3. Make a film
+1. Sign in with your Claude account when Claude Code asks.
+2. Accept when Claude asks to run the setup. Claude checks your computer and installs what is
+   missing. It says what each step does before it runs it.
+3. On Windows, click **Yes** when Windows asks for permission. On macOS, type your Mac password
+   in the Terminal window that opens.
+4. Wait until Claude says "Ready".
+
+If your computer does not let Claude install a tool (a company laptop, for example), Claude
+stops and tells you what to ask your IT team to allow.
+
+**Manual copy, without the plugin commands.** Download this repository as a ZIP file (the green
+**Code** button, then **Download ZIP**) and unzip it. Copy `plugins/demo-film/skills/demo-film`
+to `~/.claude/skills/demo-film` and `plugins/demo-film/skills/setup` to
+`~/.claude/skills/demo-film-setup` (on Windows, `~` is `C:\Users\<you>`). Start Claude Code again.
+
+## 2. Make a film
 
 1. Make a folder for your films with a short path, for example `C:\demo-films` or
    `~/demo-films`.
@@ -100,7 +101,8 @@ The skill includes an example film of a public to-do demo app. It needs no sign-
 
 > Make the example film from the demo-film skill.
 
-Or run it yourself, from the folder where this repository is (a clone or the unzipped ZIP).
+Or run it yourself after the setup, from the folder where this repository is (a clone or the
+unzipped ZIP).
 
 Windows (PowerShell):
 
@@ -154,8 +156,8 @@ render about 1 to 3 minutes.
   https://www.remotion.dev/docs/license and https://www.remotion.pro/license. (Checked on 20
   October 2026, against the `LICENSE.md` in Remotion's repository. Remotion says the licence
   changes slightly in version 5; the skill uses version 4.)
-- **Playwright** (Apache 2.0) records the app. **ffmpeg** and **Chrome** are installed by you,
-  under their own licences.
+- **Playwright** (Apache 2.0) records the app. **ffmpeg** and **Chrome** are installed by the
+  setup, under their own licences.
 - **Fonts and logos:** use only fonts and logos that you may use in a video.
 
 For problems, see [Troubleshooting](docs/troubleshooting.md).

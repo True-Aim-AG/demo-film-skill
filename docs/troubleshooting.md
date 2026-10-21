@@ -2,16 +2,17 @@
 
 Find the message or the symptom in the left column. Do the steps in the right column.
 
-## Install
+## Install and setup
 
 | Problem | What to do |
 |---|---|
-| `claude`, `node`, `pnpm` or `ffmpeg` is "not recognized" or "not found" | 1. Close the terminal. 2. Open a new terminal. 3. Try again. If it still fails, install the tool again ([Getting started](getting-started.md), step 1). |
-| `node -v` shows v18 or lower | Install Node.js 20 or later: `winget install OpenJS.NodeJS.LTS` or `brew install node`. |
-| `winget` is not found (Windows) | Install "App Installer" from the Microsoft Store, then open a new PowerShell. |
-| `brew` is not found (macOS) | Install Homebrew from https://brew.sh, then open a new Terminal. |
-| `npm install -g pnpm` fails with a permission error (macOS) | Run `corepack enable pnpm` instead. |
-| `/plugin` is not a known command | Update Claude Code: run `claude update`, then start it again. |
+| `claude` is "not recognized" or "not found" after the install block | Close the terminal, open a new one, and paste the block again. The block is safe to run again. |
+| `claude plugin` is not a known command | Update Claude Code: run `claude update`. Then paste the block again. |
+| Claude says "Please ask your IT team to allow ..." | Your computer does not let Claude install that tool. Ask IT to allow it, or to install it for you. Then ask Claude "Set up demo films" again. |
+| Windows asks "Do you want to allow this app to make changes?" | Click **Yes**. If you click No, the setup stops, and you can ask Claude to set up again. |
+| On macOS, nothing happens after you type the password | The letters do not show while you type. Type the password and press Enter. |
+| A tool is still "not found" after the setup | Type `/exit`, then run `claude` again, and repeat your request. A new Claude Code session finds every new tool. |
+| Claude Code does not start and asks for Git for Windows | In PowerShell, run `winget install Git.Git`. Then open a new PowerShell and run `claude`. If winget is blocked, ask IT. |
 
 ## Capture
 

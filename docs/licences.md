@@ -34,8 +34,9 @@ the current terms before you buy.
 |---|---|---|
 | Playwright | Apache 2.0 | Installed by `pnpm install`. Free. |
 | React | MIT | Installed by `pnpm install`. Free. |
-| ffmpeg | LGPL or GPL | You install it. Free. |
-| Google Chrome | Google's terms | You install it. Free. |
+| ffmpeg | LGPL or GPL | The setup installs it. Free. |
+| Google Chrome | Google's terms | The setup installs it. Free. |
+| Homebrew (macOS) | BSD 2-Clause | The setup installs it. Free. |
 | Inter font | SIL Open Font License | Loaded by the film. Free, also for video. |
 | Claude Code | Anthropic's terms | Needs a paid Claude plan or a Console account. |
 

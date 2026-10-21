@@ -4,93 +4,67 @@ This guide takes you from zero to your first demo film. It takes about 30 minute
 
 ## Before you start
 
-You need all of these. Check each item before you start.
+You bring these four things. Check each one before you start.
 
-- [ ] **Claude Code**, with a paid Claude plan (Pro, Max, Team or Enterprise) or a Claude
-      Console account with API credit. The free plan does not include Claude Code.
-- [ ] **Node.js 20 or later.**
-- [ ] **pnpm**, a package manager for Node.js.
-- [ ] **ffmpeg**, a video tool.
-- [ ] **Google Chrome.**
-- [ ] **Terminal basics.** You can open a terminal, paste a command and press Enter.
+- [ ] **A paid Claude plan** (Pro, Max, Team or Enterprise), or a Claude Console account with
+      API credit. The free plan does not include Claude Code.
 - [ ] **A test account on your app, with fake data only.** Real customer data must not appear
       in a film.
 - [ ] **Permission to film the app.** You own the app, or its owner agreed.
 - [ ] **A Remotion Company Licence**, if your company is for-profit and has 4 or more employees.
       See [Licences](licences.md).
 
-Steps 1 and 2 install the software. You do them one time.
+Claude installs the tools for you: Node.js 20 or later, pnpm, ffmpeg and Google Chrome, and
+Homebrew on macOS. You do not install them by hand.
 
-## 1. Install the tools
+## 1. Install Claude Code and the skill
+
+You do this step one time.
 
 ### Windows
 
 1. Open **PowerShell**: press the Windows key, type `PowerShell`, press Enter.
-2. Run these commands, one at a time:
+2. Paste this block and press Enter:
 
    ```
    irm https://claude.ai/install.ps1 | iex
-   winget install OpenJS.NodeJS.LTS
-   winget install Gyan.FFmpeg
-   winget install Google.Chrome
-   ```
-
-3. Close PowerShell and open it again. The new commands are now on the path.
-4. Run this command:
-
-   ```
-   npm install -g pnpm
+   $env:Path += ";$env:USERPROFILE\.local\bin"
+   claude plugin marketplace add True-Aim-AG/demo-film-skill
+   claude plugin install demo-film@demo-film-skill
+   claude "Set up demo films"
    ```
 
 ### macOS
 
 1. Open **Terminal**: press Cmd+Space, type `Terminal`, press Enter.
-2. If you do not have Homebrew, install it. Follow the one command on https://brew.sh.
-3. Run these commands, one at a time:
+2. Paste this block and press Enter:
 
    ```
    curl -fsSL https://claude.ai/install.sh | bash
-   brew install node
-   brew install ffmpeg
-   brew install --cask google-chrome
-   npm install -g pnpm
+   export PATH="$HOME/.local/bin:$PATH"
+   claude plugin marketplace add True-Aim-AG/demo-film-skill
+   claude plugin install demo-film@demo-film-skill
+   claude "Set up demo films"
    ```
 
-4. Close Terminal and open it again.
+The block installs Claude Code, adds the skill, and starts Claude with the request "Set up demo
+films".
 
-### Check the tools
+## 2. Let Claude set up your computer
 
-Run each command. Each one must show a version number.
+1. Sign in with your Claude account when Claude Code asks.
+2. Claude checks your computer. It lists the tools that are missing and says what each one does.
+3. Accept when Claude asks to run the setup.
+4. On Windows, click **Yes** when Windows asks "Do you want to allow this app to make changes?".
+5. On macOS, a Terminal window can open for Homebrew. Type your Mac password there and press
+   Enter. The letters do not show while you type.
+6. Wait until Claude says "Ready".
 
-```
-claude --version
-node -v
-pnpm -v
-ffmpeg -version
-```
+If your computer does not let Claude install a tool, Claude stops and tells you what to ask your
+IT team to allow. This can happen on a company laptop. When IT has allowed it, ask Claude "Set
+up demo films" again.
 
-Node must show `v20` or a higher number. If a command is not found, see
-[Troubleshooting](troubleshooting.md).
-
-## 2. Install the skill
-
-1. Run `claude`. The first time, Claude Code asks you to sign in with your Claude account.
-2. In Claude Code, type this command and press Enter:
-
-   ```
-   /plugin marketplace add True-Aim-AG/demo-film-skill
-   ```
-
-3. Type this command and press Enter:
-
-   ```
-   /plugin install demo-film@demo-film-skill
-   ```
-
-4. Type `/exit` and press Enter. Then run `claude` again.
-
-The skill is now installed. To install it without the plugin commands, see the README,
-"Option B: manual copy".
+Note: You can run the setup again at any time. It installs only what is missing.
 
 ## 3. Make your first film
 
