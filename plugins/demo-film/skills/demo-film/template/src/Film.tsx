@@ -5,7 +5,7 @@ import {
 import { loadFont } from "@remotion/google-fonts/Inter";
 import { loadFont as loadFontFile } from "@remotion/fonts";
 import { Timeline, Events, cameraAt, clamp, ease, mouseAt, out, win, Rect } from "./lib/timeline";
-import { BRAND, CALLOUT, CARDS, COLOR, CURSOR, END, SCREEN, SPOT, TYPE } from "./look";
+import { BRAND, CALLOUT, CARDS, COLOR, CURSOR, END, POWERED, SCREEN, SPOT, TYPE } from "./look";
 
 // Inter always loads, as the fallback. A custom brand font file (brand.json `font.file`) goes first.
 const inter = loadFont("normal", { weights: TYPE.weights, subsets: ["latin"] });
@@ -188,6 +188,15 @@ const EndCard: React.FC<P> = ({ tl, t }) => {
         <div style={{ marginTop: logo || BRAND.name ? END.gap : 0, textAlign: "center", opacity: k, transform: `translateY(${(1 - k) * CARDS.rise}px)` }}>
           {tl.end.line && <div style={{ font: font(TYPE.title), letterSpacing: TYPE.title.tracking, color: COLOR.ink }}>{tl.end.line}</div>}
           {tl.end.url && <div style={{ font: font(TYPE.sub), letterSpacing: TYPE.sub.tracking, color: COLOR.accent, marginTop: 14 }}>{tl.end.url}</div>}
+        </div>
+      )}
+      {POWERED.on && (
+        <div style={{
+          position: "absolute", right: POWERED.right, bottom: POWERED.bottom, display: "flex", alignItems: "center", gap: POWERED.gap,
+          opacity: POWERED.opacity * win(t, tl.endCard + POWERED.delay, tl.duration + 1, CARDS.fadeIn, 0.1),
+        }}>
+          <span style={{ font: `500 ${POWERED.size}px/1 ${fontFamily}`, color: COLOR.inkSoft }}>Powered by</span>
+          <Img src={staticFile(POWERED.logo)} style={{ width: POWERED.logoWidth, display: "block" }} />
         </div>
       )}
     </AbsoluteFill>

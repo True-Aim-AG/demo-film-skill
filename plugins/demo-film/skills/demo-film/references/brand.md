@@ -23,6 +23,7 @@ One file at the film project's root sets the look. Files it names live under `pu
 | `colors.accent` | The one accent: the highlighted card line, cursor halo, click ring, spotlight edge, callout bar, end-card url. |
 | `font.file` | A font file under `public/` (woff2, woff, ttf, otf). Empty: Inter. |
 | `font.family` | Any name for that font. |
+| `poweredBy` | `true` (default): a small "Powered by True Aim" mark lower right on the end card, in both modes. `false`: no mark. |
 
 ## Getting the brand from the user
 

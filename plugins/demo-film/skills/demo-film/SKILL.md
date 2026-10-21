@@ -33,6 +33,9 @@ Ask this first, before anything else:
   `pnpm brand <url>` and show the user what it found. Then fill `brand.json`. Details:
   `references/brand.md`.
 
+In both modes the end card carries a small "Powered by True Aim" mark, lower right. Tell the user
+once. If they do not want it, set `"poweredBy": false` in `brand.json`.
+
 ## Step 2. Permission and privacy
 
 Ask both questions, and stop if the answer is no:
@@ -133,7 +136,7 @@ Renders and takes are git-ignored. The film is the file `out/<id>.mp4`.
 
 - The brand from `brand.json`, or the neutral look. The app in its light theme.
 - Opening cards on the ground colour, type only, then the screen scales in. The film ends on the
-  logo (brand) or the end line (no brand).
+  logo (brand) or the end line (no brand), with the small "Powered by" mark lower right.
 - Big cursor (46 px) with a halo and a click ring, drawn in post. Zoom 1.0 to 1.65,
   ease-in-out, 1.1 to 1.4 s per move. A spotlight dims the rest to 45 % with an accent edge.
 - A glass callout lower left, one title and at most one sub line.

@@ -10,11 +10,13 @@ export type Brand = {
   colors: { ground: string; ink: string; inkSoft: string; accent: string };
   /** A font file under public/ (woff2, woff, ttf, otf). Empty: Inter. */
   font?: { file?: string; family?: string };
+  /** The small "Powered by True Aim" mark on the end card, lower right. Default true; false removes it. */
+  poweredBy?: boolean;
 };
 
 const NEUTRAL: Brand["colors"] = { ground: "#FAFAFA", ink: "#1F2328", inkSoft: "#4B5058", accent: "#2F6FEB" };
 const raw = brandFile as unknown as Brand;
-export const BRAND: Brand = raw.mode === "custom" ? raw : { mode: "none", colors: { ...NEUTRAL, ...(raw.colors || {}) } };
+export const BRAND: Brand = raw.mode === "custom" ? raw : { mode: "none", colors: { ...NEUTRAL, ...(raw.colors || {}) }, poweredBy: raw.poweredBy };
 
 const rgb = (hex: string) => {
   const h = hex.replace("#", "");
@@ -68,3 +70,12 @@ export const CALLOUT = {
 
 // lineDelay: the end line follows the logo. logoHeight caps a tall logo.
 export const END = { fade: 1.2, logoWidth: 640, logoHeight: 260, grow: 0.03, lineDelay: 1.0, gap: 72 };
+
+// "Powered by True Aim", small, lower right on the end card. The logo variant follows the ground:
+// the dark logo on a light ground, the light logo on a dark one. brand.json "poweredBy": false removes it.
+const lum = (hex: string) => rgb(hex).split(",").map(Number).reduce((a, v, i) => a + v * [0.299, 0.587, 0.114][i], 0) / 255;
+export const POWERED = {
+  on: BRAND.poweredBy !== false,
+  logo: lum(BRAND.colors.ground) > 0.5 ? "powered-by/true-aim-dark.svg" : "powered-by/true-aim-light.svg",
+  right: 72, bottom: 60, logoWidth: 132, size: 20, gap: 12, opacity: 0.8, delay: 0.6,
+};
