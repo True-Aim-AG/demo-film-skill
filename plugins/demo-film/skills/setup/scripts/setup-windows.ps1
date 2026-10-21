@@ -4,7 +4,7 @@
 #   powershell.exe -NoProfile -ExecutionPolicy Bypass -File setup-windows.ps1 -Install   install what is missing
 #   ... -Install -DryRun                                                                 print the install commands only
 #
-# Tools: Node.js 20 or later, pnpm, ffmpeg, Google Chrome. Installs with winget, then pnpm with npm.
+# Tools: Git, Node.js 20 or later, pnpm, ffmpeg, Google Chrome. Installs with winget, then pnpm with npm.
 # Safe to run again: it installs only what is missing. Runs under Windows PowerShell 5.1 and 7.
 # Output: one line per tool (OK, MISSING, BLOCKED), then READY, NOT READY or BLOCKED.
 # Exit code: 0 ready, 1 something missing (check mode), 2 blocked (ask IT).
@@ -23,7 +23,8 @@ function Update-SessionPath {
     (Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps"),
     (Join-Path $env:LOCALAPPDATA "Microsoft\WinGet\Links"),
     (Join-Path $env:APPDATA "npm"),
-    (Join-Path $env:ProgramFiles "nodejs")
+    (Join-Path $env:ProgramFiles "nodejs"),
+    (Join-Path $env:ProgramFiles "Git\cmd")
   )
   $env:Path = (@($machine, $user) + $extra | Where-Object { $_ }) -join ";"
 }
@@ -50,6 +51,8 @@ function Find-Chrome {
 
 function Test-Tools {
   $r = [ordered]@{}
+  $git = Get-Version "git" "--version"
+  if ($git) { $r.git = "OK git " + ($git -replace "^git version ", "") } else { $r.git = "MISSING git" }
   $node = Get-Version "node" "-v"
   if ($node -and $node -match "^v(\d+)\.") {
     if ([int]$Matches[1] -ge 20) { $r.node = "OK node $node" } else { $r.node = "MISSING node (found $node, need 20 or later)" }
@@ -69,6 +72,7 @@ function Show-Tools($r) { foreach ($k in $r.Keys) { Write-Output $r[$k] } }
 
 # What each tool is, in one plain line, and how to install it.
 $plan = [ordered]@{
+  git    = @{ why = "Git downloads the demo-film skill and its updates. Windows can ask for permission: click Yes."; id = "Git.Git"; name = "Git" }
   node   = @{ why = "Node.js runs the film tools. Windows can ask for permission: click Yes."; id = "OpenJS.NodeJS.LTS"; name = "Node.js" }
   ffmpeg = @{ why = "ffmpeg turns the recorded frames into a video file."; id = "Gyan.FFmpeg"; name = "ffmpeg" }
   chrome = @{ why = "Google Chrome is the browser that records your app. Windows can ask for permission: click Yes."; id = "Google.Chrome"; name = "Google Chrome" }
@@ -92,11 +96,11 @@ if (-not $winget -and ($missing | Where-Object { $_ -ne "pnpm" })) {
   Stop-Blocked "winget (App Installer from the Microsoft Store)"
 }
 
-foreach ($k in @("node", "ffmpeg", "chrome")) {
+foreach ($k in @("git", "node", "ffmpeg", "chrome")) {
   if ($missing -notcontains $k) { continue }
   $p = $plan[$k]
   Write-Output "STEP $($p.why)"
-  $wargs = @("install", "--id", $p.id, "--exact", "--silent", "--accept-source-agreements", "--accept-package-agreements")
+  $wargs = @("install", "--id", $p.id, "--exact", "--source", "winget", "--silent", "--accept-source-agreements", "--accept-package-agreements")
   Write-Output "RUN winget $($wargs -join ' ')"
   if ($DryRun) { continue }
   & $winget.Source @wargs

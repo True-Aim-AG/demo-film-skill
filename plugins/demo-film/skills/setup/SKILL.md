@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Check and install the tools that demo films need (Node.js 20+, pnpm, ffmpeg, Google Chrome, and Homebrew on macOS), so the user never installs them by hand. Use when the user says "set up demo films", "install what demo films need", "get my computer ready for demo films", or when the demo-film skill finds a tool missing. Safe to run again.
+description: Check and install the tools that demo films need (Git, Node.js 20+, pnpm, ffmpeg, Google Chrome, and Homebrew on macOS), so the user never installs them by hand. Use when the user says "set up demo films", "install what demo films need", "get my computer ready for demo films", or when the demo-film skill finds a tool missing. Safe to run again.
 ---
 
 # Demo film setup
@@ -36,7 +36,8 @@ List what is missing and what you will install, one plain line each. For example
 >
 > I will install them now. Windows can ask for permission: click **Yes**.
 
-On macOS without Homebrew, also say: "A Terminal window will open. Type your Mac password there
+On macOS without Git, also say: "A window will ask to install the command line developer tools.
+Click Install and wait." On macOS without Homebrew, also say: "A Terminal window will open. Type your Mac password there
 and press Enter. The letters do not show while you type."
 
 ## 3. Install
@@ -57,7 +58,7 @@ To see the commands without an install, add `-DryRun` (Windows) or `--dry-run` (
 |---|---|
 | `READY` | Say "Ready. Your computer has everything for demo films." Then continue with the user's film request, or tell them to ask "Make a demo film of <address>". |
 | `BLOCKED <what>` | Stop. Say only: "Your computer does not let me install <what>. Please ask your IT team to allow <what>, then ask me again." Do not try another install method, an admin account or a way around the block. |
-| `WAITING ...` (macOS, exit 3) | The Homebrew install still runs in Terminal. Ask the user to finish it there, then run the install again. |
+| `WAITING ...` (macOS, exit 3) | The Command Line Tools install, or the Homebrew install in Terminal, still runs. Ask the user to finish it, then run the install again. |
 | `NOT READY` | Run the check again. If a tool is still missing, the install did not take: say which tool, and ask the user to restart the computer and ask you again. |
 
 Permission prompts:

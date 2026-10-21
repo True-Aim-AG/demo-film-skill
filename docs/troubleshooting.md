@@ -6,13 +6,18 @@ Find the message or the symptom in the left column. Do the steps in the right co
 
 | Problem | What to do |
 |---|---|
+| `Failed to clone marketplace repository: Command 'git' not found` | Git is missing, or this terminal does not see it yet. Use the current install block: it installs Git first. Close the terminal, open a new one, and paste the whole block again. |
+| `Plugin "demo-film" not found in marketplace "demo-film-skill"` | The marketplace step before it failed, usually because Git was missing. Fix that error first, then paste the whole block again. |
+| The Claude installer warns that `.local\bin` (or `.local/bin`) is not in your PATH | Ignore it. The install block adds the folder to your PATH for new terminals. |
 | `claude` is "not recognized" or "not found" after the install block | Close the terminal, open a new one, and paste the block again. The block is safe to run again. |
+| `winget` is "not recognized" | Windows needs the App Installer from the Microsoft Store. Install it, or ask IT to install Git for you. Then paste the block again. |
+| On macOS, the block waits and nothing happens | A window asks to install the command line developer tools. It can be behind the Terminal window. Click **Install** and wait. |
 | `claude plugin` is not a known command | Update Claude Code: run `claude update`. Then paste the block again. |
 | Claude says "Please ask your IT team to allow ..." | Your computer does not let Claude install that tool. Ask IT to allow it, or to install it for you. Then ask Claude "Set up demo films" again. |
 | Windows asks "Do you want to allow this app to make changes?" | Click **Yes**. If you click No, the setup stops, and you can ask Claude to set up again. |
 | On macOS, nothing happens after you type the password | The letters do not show while you type. Type the password and press Enter. |
 | A tool is still "not found" after the setup | Type `/exit`, then run `claude` again, and repeat your request. A new Claude Code session finds every new tool. |
-| Claude Code does not start and asks for Git for Windows | In PowerShell, run `winget install Git.Git`. Then open a new PowerShell and run `claude`. If winget is blocked, ask IT. |
+| Claude Code does not start and asks for Git for Windows | In PowerShell, run `winget install --id Git.Git -e --source winget`. Then open a new PowerShell and run `claude`. If winget is blocked, ask IT. |
 
 ## Capture
 

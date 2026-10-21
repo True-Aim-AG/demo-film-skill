@@ -34,8 +34,16 @@ load_brew() {
 pretend() { case "$PRETEND" in *",$1,"*) return 0 ;; esac; return 1; }
 
 check() {
-  BREW=""; NODE=""; PNPM=""; FFMPEG=""; CHROME=""
+  BREW=""; GIT=""; NODE=""; PNPM=""; FFMPEG=""; CHROME=""
   if ! pretend brew && command -v brew >/dev/null 2>&1; then BREW="OK brew $(brew --version 2>/dev/null | head -1)"; else BREW="MISSING brew"; fi
+  # On a new Mac, /usr/bin/git is only a stub that opens an install window. Call git only when
+  # the Command Line Tools are there, or a git from Homebrew is.
+  GIT="MISSING git"
+  if ! pretend git; then
+    if xcode-select -p >/dev/null 2>&1 || [ -x /opt/homebrew/bin/git ] || [ -x /usr/local/bin/git ]; then
+      g=$(git --version 2>/dev/null) && GIT="OK $g"
+    fi
+  fi
   v=$(node -v 2>/dev/null)
   major=$(echo "$v" | sed -n 's/^v\([0-9]*\)\..*/\1/p')
   if ! pretend node && [ -n "$major" ] && [ "$major" -ge 20 ]; then NODE="OK node $v"
@@ -51,12 +59,10 @@ check() {
   fi
 }
 
-show() { printf '%s\n' "$BREW" "$NODE" "$PNPM" "$FFMPEG" "$CHROME"; }
+show() { printf '%s\n' "$BREW" "$GIT" "$NODE" "$PNPM" "$FFMPEG" "$CHROME"; }
 # Homebrew counts only when a tool needs it: a Mac with every tool is ready without it.
-missing() { printf '%s
-' "$NODE" "$PNPM" "$FFMPEG" "$CHROME" | grep -c '^MISSING'; }
-needs_brew() { printf '%s
-' "$NODE" "$FFMPEG" "$CHROME" | grep -q '^MISSING'; }
+missing() { printf '%s\n' "$GIT" "$NODE" "$PNPM" "$FFMPEG" "$CHROME" | grep -c '^MISSING'; }
+needs_brew() { printf '%s\n' "$NODE" "$FFMPEG" "$CHROME" | grep -q '^MISSING'; }
 
 blocked() {
   echo "BLOCKED $1"
@@ -76,6 +82,25 @@ show
 if [ "$(missing)" = 0 ]; then echo "READY"; exit 0; fi
 if [ $INSTALL = 0 ]; then echo "NOT READY: missing $(show | grep '^MISSING' | awk '{print $2}' | tr '\n' ' ')"; exit 1; fi
 
+case "$GIT" in MISSING*)
+  # Apple's Command Line Tools bring git. Their installer is a window with an Install button.
+  echo "STEP Git downloads the demo-film skill and its updates. It comes with Apple's Command Line Tools. A window opens: click Install."
+  echo "RUN xcode-select --install"
+  if [ $DRY = 0 ]; then
+    xcode-select --install >/dev/null 2>&1
+    i=0
+    while [ $i -lt 120 ]; do
+      if xcode-select -p >/dev/null 2>&1; then break; fi
+      sleep 10; i=$((i + 1))
+    done
+    xcode-select -p >/dev/null 2>&1 || { echo "WAITING The Command Line Tools are not installed yet. Click Install in the window and wait, then run the setup again."; exit 3; }
+    check
+    case "$GIT" in MISSING*) blocked "git (Apple's Command Line Tools)" ;; esac
+    echo "$GIT"
+  fi
+;; esac
+
+needs_brew || BREW="SKIP"
 case "$BREW" in MISSING*)
   # The Homebrew installer asks for the Mac password, which this script cannot type. Open it in
   # Terminal, where the user types the password, and wait for brew to appear.

@@ -18,7 +18,7 @@ numbers. Show the result as a video file and ask what they think.
 
 Run the check of the `setup` skill (`demo-film:setup`, in `../setup/` next to this skill's
 folder): `scripts/setup-windows.ps1` or `scripts/setup-macos.sh` with no flag. It tells you if
-Node.js 20+, pnpm, ffmpeg and Chrome are there. If the last line is not `READY`, load the `setup` skill and
+Git, Node.js 20+, pnpm, ffmpeg and Chrome are there. If the last line is not `READY`, load the `setup` skill and
 follow it: it installs what is missing. Never ask the user to install a tool by hand. Then
 continue here.
 

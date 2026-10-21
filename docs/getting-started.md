@@ -14,8 +14,8 @@ You bring these four things. Check each one before you start.
 - [ ] **A Remotion Company Licence**, if your company is for-profit and has 4 or more employees.
       See [Licences](licences.md).
 
-Claude installs the tools for you: Node.js 20 or later, pnpm, ffmpeg and Google Chrome, and
-Homebrew on macOS. You do not install them by hand.
+The install block in step 1 installs Git. Claude installs the other tools for you: Node.js 20 or
+later, pnpm, ffmpeg and Google Chrome, and Homebrew on macOS. You do not install them by hand.
 
 ## 1. Install Claude Code and the skill
 
@@ -28,11 +28,19 @@ You do this step one time.
 
    ```
    irm https://claude.ai/install.ps1 | iex
-   $env:Path += ";$env:USERPROFILE\.local\bin"
-   claude plugin marketplace add True-Aim-AG/demo-film-skill
+   $p = "$env:USERPROFILE\.local\bin"
+   $u = [Environment]::GetEnvironmentVariable("Path", "User")
+   if ($u -notlike "*$p*") { [Environment]::SetEnvironmentVariable("Path", "$u;$p", "User") }
+   winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements
+   $m = [Environment]::GetEnvironmentVariable("Path", "Machine")
+   $u = [Environment]::GetEnvironmentVariable("Path", "User")
+   $env:Path = "$m;$u"
+   claude plugin marketplace add https://github.com/True-Aim-AG/demo-film-skill.git
    claude plugin install demo-film@demo-film-skill
    claude "Set up demo films"
    ```
+
+3. If Windows asks "Do you want to allow this app to make changes?" for Git, click **Yes**.
 
 ### macOS
 
@@ -41,14 +49,24 @@ You do this step one time.
 
    ```
    curl -fsSL https://claude.ai/install.sh | bash
+   line='export PATH="$HOME/.local/bin:$PATH"'
+   grep -qsF "$line" ~/.zprofile || echo "$line" >> ~/.zprofile
    export PATH="$HOME/.local/bin:$PATH"
-   claude plugin marketplace add True-Aim-AG/demo-film-skill
+   if ! xcode-select -p >/dev/null 2>&1; then xcode-select --install; fi
+   until xcode-select -p >/dev/null 2>&1; do sleep 5; done
+   claude plugin marketplace add https://github.com/True-Aim-AG/demo-film-skill.git
    claude plugin install demo-film@demo-film-skill
    claude "Set up demo films"
    ```
 
-The block installs Claude Code, adds the skill, and starts Claude with the request "Set up demo
-films".
+3. If a window asks to install the "command line developer tools", click **Install**. Wait until
+   the install is done, about 5 to 15 minutes. The block then continues.
+
+The block installs Claude Code and makes new terminals find it. It installs Git, which the plugin
+commands need to download the skill. Then it adds the skill and starts Claude with the request
+"Set up demo films".
+
+Note: The block is safe to paste again. It skips what is already installed.
 
 ## 2. Let Claude set up your computer
 

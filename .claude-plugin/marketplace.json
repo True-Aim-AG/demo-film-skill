@@ -9,7 +9,7 @@
       "name": "demo-film",
       "source": "./plugins/demo-film",
       "description": "Make a short, silent demo film of a web app: record the real app with Playwright, direct it in Remotion (camera, spotlight, big cursor, callouts, end card) from one timeline file.",
-      "version": "1.1.0"
+      "version": "1.1.1"
     }
   ]
 }

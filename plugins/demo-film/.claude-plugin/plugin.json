@@ -1,6 +1,6 @@
 {
   "name": "demo-film",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Make a short, silent demo film of a web app: record the real app with Playwright, direct it in Remotion from one timeline file. Asks brand or no brand first; supports a one-time manual sign-in (SSO, MFA).",
   "license": "MIT"
 }
